@@ -1,6 +1,6 @@
 import { getToken, clearToken } from "./auth";
 
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://f1replaytiming-production-f0df.up.railway.app";
 
 export function apiUrl(path: string): string {
   return `${API_URL}${path}`;
