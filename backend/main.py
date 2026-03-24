@@ -43,7 +43,13 @@ app = FastAPI(
 # CORS
 frontend_url = os.environ.get("FRONTEND_URL", "http://localhost:3000")
 extra_origins = [o.strip() for o in os.environ.get("EXTRA_ORIGINS", "").split(",") if o.strip()]
-allowed_origins = [frontend_url, "http://localhost:3000", "http://localhost:3001"] + extra_origins
+allowed_origins = [
+    frontend_url,
+    "http://localhost:3000",
+    "http://localhost:3001",
+    # Railway production frontend
+    "https://responsible-courage-production-50ce.up.railway.app",
+] + extra_origins
 # Ensure https variants are included for Railway/production URLs
 for origin in list(allowed_origins):
     if origin.startswith("https://"):
