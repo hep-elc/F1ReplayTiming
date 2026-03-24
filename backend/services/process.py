@@ -18,6 +18,8 @@ from services.f1_data import (
     _get_race_results_sync,
     _get_driver_positions_by_time_sync,
     _get_driver_telemetry_sync,
+    clear_session_cache,
+    _cache_key,
 )
 
 logger = logging.getLogger(__name__)
@@ -122,6 +124,9 @@ def process_session_sync(
         logger.info(f"[{prefix}] Uploaded telemetry for {len(drivers)} drivers")
     except Exception as e:
         logger.warning(f"[{prefix}] Telemetry upload issue: {e}")
+
+    # Release the FastF1 session from memory — these are huge (100s of MB)
+    clear_session_cache(_cache_key(year, round_num, session_type))
 
     status("Done")
     logger.info(f"[{prefix}] Done")

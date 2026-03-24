@@ -36,6 +36,16 @@ def _cache_key(year: int, round_num: int, session_type: str) -> str:
     return f"{year}_{round_num}_{session_type}"
 
 
+def clear_session_cache(key: str | None = None):
+    """Release cached FastF1 sessions to free memory. Pass key to clear one, or None to clear all."""
+    import gc
+    if key and key in _session_cache:
+        del _session_cache[key]
+    elif key is None:
+        _session_cache.clear()
+    gc.collect()
+
+
 # Cache for session availability checks: key -> bool
 _availability_cache: dict[str, bool] = {}
 

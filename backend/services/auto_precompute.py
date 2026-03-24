@@ -7,6 +7,7 @@ checks if we've already processed them, and runs precompute if not.
 
 import asyncio
 import logging
+import os
 import traceback
 from datetime import datetime, timedelta, timezone
 
@@ -98,6 +99,11 @@ async def _check_and_process():
 
 async def auto_precompute_loop():
     """Main loop: checks for new data every 30 minutes on active days."""
+    # Allow disabling via env var (e.g. on memory-constrained Railway deployments)
+    if os.environ.get("DISABLE_AUTO_PRECOMPUTE", "").lower() in ("true", "1", "yes"):
+        logger.info("Auto-precompute disabled via DISABLE_AUTO_PRECOMPUTE env var")
+        return
+
     logger.info("Auto-precompute background task started")
 
     # Short initial delay to let the app finish starting up

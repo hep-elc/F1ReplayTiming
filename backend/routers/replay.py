@@ -34,7 +34,7 @@ _replay_cache: dict[str, list[dict]] = {}
 _replay_clients: dict[str, int] = {}  # key -> active WebSocket count
 _eviction_tasks: dict[str, asyncio.Task] = {}  # key -> pending eviction task
 
-CACHE_EVICTION_SECONDS = 300  # 5 minutes after last client disconnects
+CACHE_EVICTION_SECONDS = int(os.environ.get("REPLAY_CACHE_TTL", "120"))  # seconds after last client disconnects
 
 # In-memory cache for pit loss data
 _pit_loss_cache: dict | None = None
