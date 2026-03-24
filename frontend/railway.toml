@@ -3,8 +3,10 @@ builder = "DOCKERFILE"
 dockerfilePath = "Dockerfile"
 
 [deploy]
-startCommand = "node server.js"
+# No startCommand — the Dockerfile ENTRYPOINT (entrypoint.sh) must run
+# to inject the runtime NEXT_PUBLIC_API_URL into the built JS bundles.
 healthcheckPath = "/"
 healthcheckTimeout = 60
+numReplicas = 1
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 3
