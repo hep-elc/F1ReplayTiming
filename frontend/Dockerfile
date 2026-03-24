@@ -37,7 +37,8 @@ USER nextjs
 
 EXPOSE 3000
 
-ENV PORT=3000
+# Do NOT hardcode PORT — Railway sets it at runtime.
+# HOSTNAME must be 0.0.0.0 so the server binds to all interfaces.
 ENV HOSTNAME="0.0.0.0"
 
 ENTRYPOINT ["/entrypoint.sh"]
